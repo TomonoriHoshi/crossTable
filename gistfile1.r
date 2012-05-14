@@ -12,11 +12,9 @@ crossTable <- function(...,
     useNA <- "always"
   useNA <- match.arg(useNA)
   if(is.null(dnn))
-    table <- table(..., exclude=exclude, useNA=useNA,
-                   deparse.level=deparse.level)
+    table <- table(..., exclude=exclude, useNA=useNA, deparse.level=deparse.level)
   else
-    table <- table(..., exclude=exclude, useNA=useNA,
-                   dnn=dnn, deparse.level=deparse.level)
+    table <- table(..., exclude=exclude, useNA=useNA, dnn=dnn, deparse.level=deparse.level)
   return(new("CrossTable", table))
 }
 
@@ -39,22 +37,34 @@ summary.CrossTable <- function(x, digits=3, ...){
     rowvar[length(rowvar)-1] <- "Total"
     rowvar <- format(rowvar)
     
-    for(i in seq_len(dim[2]+1)){
-      count   <- x[, i]
-      
+    for(i in seq_len(dim[2])){
+      count   <- x[, i]      
       percent <- format(p[, i], digits=digits)
       percent <- paste(percent, "%", sep="")
+      
       col <- paste(count, percent, sep="\t", collapse="\t")
       col <- strsplit(col, "\t")[[1]]
       col <- format(col, justify="right", width=width)
-      col <- c(ifelse(is.na(dimnames[[2]][i]), "Total", dimnames[[2]][i]), col)
+      col <- c(dimnames[[2]][i], col)
       col <- format(col, justify="centre")
       output <- paste(output, col, sep=" ")
     }
+    i <- dim[2]+1
+    count   <- x[, i]
+    percent <- format(p[, i], digits=digits)
+    percent <- paste(percent, "%", sep="")
+    
+    col <- paste(count, percent, sep="\t", collapse="\t")
+    col <- strsplit(col, "\t")[[1]]
+    col <- format(col, justify="right", width=width)
+    col <- c(" ", " ", "Total", col)
+    col <- format(col, justify="centre")
+    
     output <- paste(output, sep=" ")
     nchar  <- nchar(output[1], type="width")
     line1  <- paste(rep("-", nchar), collapse="")
     output <- format(c(varnames[2], line1, output), justify="centre")
+    output <- paste(output, col, sep=" ")
     
     output <- paste(rowcat, output, sep=" ")
     nchar  <- nchar(output[1], type="width")
@@ -65,8 +75,7 @@ summary.CrossTable <- function(x, digits=3, ...){
     line2  <- paste(rep("=", nchar), collapse="")
     line1  <- paste(rep("-", nchar), collapse="")
     output <- c(line2, output[1:3], line1, output[4:length(output)], line2)
-    output <- c(output[1:(length(output)-3)], line1,
-                output[(length(output)-2):length(output)])
+    output <- c(output[1:(length(output)-3)], line1, output[(length(output)-2):length(output)])
     return(output)
   }
   
