@@ -1,3 +1,4 @@
+# 2012／05／15 罫線を修正
 setClass("CrossTable", contains="table")
 setMethod("show", signature=c(object="CrossTable"), function(object){
   print(ftable(object))
