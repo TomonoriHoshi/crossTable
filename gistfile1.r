@@ -12,9 +12,11 @@ crossTable <- function(...,
     useNA <- "always"
   useNA <- match.arg(useNA)
   if(is.null(dnn))
-    table <- table(..., exclude=exclude, useNA=useNA, deparse.level=deparse.level)
+    table <- table(..., exclude=exclude, useNA=useNA,
+                   deparse.level=deparse.level)
   else
-    table <- table(..., exclude=exclude, useNA=useNA, dnn=dnn, deparse.level=deparse.level)
+    table <- table(..., exclude=exclude, useNA=useNA,
+                   dnn=dnn, deparse.level=deparse.level)
   return(new("CrossTable", table))
 }
 
@@ -63,7 +65,8 @@ summary.CrossTable <- function(x, digits=3, ...){
     line2  <- paste(rep("=", nchar), collapse="")
     line1  <- paste(rep("-", nchar), collapse="")
     output <- c(line2, output[1:3], line1, output[4:length(output)], line2)
-    output <- c(output[1:(length(output)-3)], line1, output[(length(output)-2):length(output)])
+    output <- c(output[1:(length(output)-3)], line1,
+                output[(length(output)-2):length(output)])
     return(output)
   }
   
