@@ -225,11 +225,11 @@ summary.CrossTable <- function(object, digits=3, latex=FALSE, ...){
       cat("\n")
     }
     cat("Total", fill=TRUE)
-    cat("\n")
 
     if(vcd){
       print(summary(assocstats(margin.table(x, c(2, 3)))))
     } else {
+      cat("\n")
       print(summary.table(margin.table(x, c(2, 3))))
     }
     cat("\n")
