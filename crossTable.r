@@ -2,6 +2,9 @@
 # 実装をシンプルに
 # vcdパッケージがあればCramer's Vを出力
 # summary.CrossTableにlatexオプション（ただし表組み部分のみ）
+if(!require("vcd")){
+  install.packages("vcd")
+}
 
 # 2012/05/15 罫線を修正
 
